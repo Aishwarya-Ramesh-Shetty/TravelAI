@@ -15,7 +15,16 @@ const tripSchema = new mongoose.Schema({
     days: [{
       day: Number,
       title: String,
-      activities: [{ time: String, activity: String }]
+      activities: [
+        {
+          time: String,
+          placeName: String,
+          activity: String,
+          estimatedCost: String,
+          bestTimeToVisit: String,
+          imageUrl: String
+        }
+      ]
     }],
     travelTips: [String]
   },

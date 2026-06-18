@@ -30,7 +30,7 @@ export default function ItineraryView() {
 
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50">
 
-      
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900"></div>
@@ -132,26 +132,61 @@ export default function ItineraryView() {
               <div className="ml-7 border-l-2 border-indigo-200 pl-10 space-y-5">
 
                 {day.activities.map((act, idx) => (
+
                   <div
                     key={idx}
-                    className="relative bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-xl transition"
+                    className="relative bg-white rounded-3xl overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl transition duration-300"
                   >
 
+                    
                     <div className="absolute -left-[50px] top-6 w-4 h-4 rounded-full bg-indigo-600"></div>
 
-                    <div className="flex flex-col md:flex-row md:items-start gap-4">
+                    <img
+                      src={
+                        act.imageUrl ||
+                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200"
+                      }
+                      alt={act.placeName || "Travel Destination"}
+                      className="w-full h-64 object-cover"
+                    />
 
-                      <div className="bg-indigo-50 text-indigo-700 px-3 py-2 rounded-xl font-bold min-w-fit">
-                        {act.time}
+                    <div className="p-6">
+
+                      <div className="flex flex-wrap gap-3 items-center mb-4">
+
+                        <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold">
+                          🕒 {act.time}
+                        </span>
+
+                        {act.bestTimeToVisit && (
+                          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                            Best Time: {act.bestTimeToVisit}
+                          </span>
+                        )}
+
                       </div>
 
-                      <p className="text-gray-700 leading-relaxed">
+                      {act.placeName && (
+                        <h4 className="text-2xl font-bold text-gray-900 mb-3">
+                          📍 {act.placeName}
+                        </h4>
+                      )}
+
+                      <p className="text-gray-600 leading-relaxed text-lg">
                         {act.activity}
                       </p>
 
+                      {act.estimatedCost && (
+                        <div className="mt-4 inline-flex items-center bg-yellow-50 text-yellow-700 px-3 py-2 rounded-lg text-sm font-medium">
+                          💰 Estimated Cost: {act.estimatedCost}
+                        </div>
+                      )}
+
                     </div>
+
                   </div>
                 ))}
+
 
               </div>
 
