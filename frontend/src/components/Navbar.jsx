@@ -12,36 +12,77 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center gap-2 text-indigo-600 font-bold text-xl">
-              <Plane className="rotate-45" /> TravelAI
-            </Link>
-          </div>
-          <div className="flex items-center gap-6">
+    <nav className="bg-white/95 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="h-20 flex items-center justify-between">
+
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-gray-900"
+          >
+            <Plane
+              size={22}
+              className="rotate-45 text-indigo-600"
+            />
+            <span className="font-bold text-xl">
+              TravelAI
+            </span>
+          </Link>
+
+          <div className="flex items-center gap-4">
             {user ? (
               <>
-                <Link to="/dashboard" className="text-gray-600 hover:text-indigo-600 font-medium">Dashboard</Link>
-                <div className="flex items-center gap-4 border-l pl-6">
-                  <span className="flex items-center gap-1 text-sm font-medium text-gray-700">
-                    <UserIcon size={16} /> {user.name}
+                <Link
+                  to="/dashboard"
+                  className="text-gray-600 hover:text-indigo-600"
+                >
+                  Dashboard
+                </Link>
+
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center">
+                    <UserIcon
+                      size={14}
+                      className="text-white"
+                    />
+                  </div>
+
+                  <span className="text-sm font-medium text-gray-700">
+                    {user.name}
                   </span>
-                  <button onClick={handleLogout} className="text-gray-500 hover:text-red-500">
-                    <LogOut size={20} />
+
+                  <button
+                    onClick={handleLogout}
+                    className="text-gray-500 hover:text-red-500"
+                  >
+                    <LogOut size={18} />
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <Link to="/login" className="text-gray-600 hover:text-indigo-600 font-medium">Login</Link>
-                <Link to="/register" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Get Started</Link>
+                <Link
+                  to="/login"
+                  className="text-gray-600 hover:text-indigo-600"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  to="/register"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:scale-[1.02] transition-all shadow-lg"
+                >
+                  Get Started
+                </Link>
               </>
             )}
           </div>
+
         </div>
       </div>
     </nav>
   );
+
+
+
 }
