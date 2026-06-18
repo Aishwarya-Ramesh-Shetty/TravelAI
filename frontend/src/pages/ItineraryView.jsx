@@ -27,41 +27,142 @@ export default function ItineraryView() {
   if (isLoading) return <div className="p-10 text-center">Loading Itinerary...</div>;
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <div className="flex justify-between items-start mb-8">
-        <div>
-          <h1 className="text-4xl font-extrabold text-gray-900">{trip.destination}</h1>
-          <div className="flex items-center gap-4 mt-2 text-gray-600">
-            <span className="flex items-center gap-1"><Calendar size={18}/> {trip.startDate} - {trip.endDate}</span>
+
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50">
+
+      
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900"></div>
+
+        <div className="relative max-w-6xl mx-auto px-6 py-16 text-white">
+          <div className="flex flex-col lg:flex-row justify-between gap-8">
+
+            <div>
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full mb-4">
+                <MapPin size={16} />
+                <span>Dream Destination</span>
+              </div>
+
+              <h1 className="text-5xl font-extrabold mb-4">
+                {trip.destination}
+              </h1>
+
+              <div className="flex items-center gap-2 text-indigo-100">
+                <Calendar size={18} />
+                <span>
+                  {trip.startDate} - {trip.endDate}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex gap-3 self-start">
+              <button
+                onClick={handleShare}
+                className="bg-white/10 backdrop-blur-md border border-white/20 px-5 py-3 rounded-xl hover:bg-white/20 transition flex items-center gap-2"
+              >
+                <Share2 size={18} />
+                Share
+              </button>
+
+              <button
+                onClick={handleDownload}
+                className="bg-white text-indigo-900 px-5 py-3 rounded-xl font-semibold hover:scale-105 transition flex items-center gap-2"
+              >
+                <Download size={18} />
+                Download PDF
+              </button>
+            </div>
+
           </div>
         </div>
-        <div className="flex gap-2">
-          <button onClick={handleShare} className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg hover:bg-gray-50"><Share2 size={18}/> Share</button>
-          <button onClick={handleDownload} className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"><Download size={18}/> PDF</button>
-        </div>
       </div>
 
-      <div className="bg-indigo-50 p-6 rounded-2xl mb-8">
-        <h2 className="text-xl font-bold mb-2">Trip Summary</h2>
-        <p className="text-indigo-900 leading-relaxed">{trip.itinerary.tripSummary}</p>
-      </div>
+      <div className="max-w-6xl mx-auto px-6 py-10">
 
-      <div className="space-y-10">
-        {trip.itinerary.days.map((day) => (
-          <div key={day.day} className="relative pl-8 border-l-2 border-indigo-200">
-            <div className="absolute -left-3 top-0 w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs font-bold">{day.day}</div>
-            <h3 className="text-2xl font-bold mb-4">Day {day.day}: {day.title}</h3>
-            <div className="grid gap-4">
-              {day.activities.map((act, idx) => (
-                <div key={idx} className="bg-white p-4 rounded-xl border shadow-sm flex gap-4">
-                  <span className="font-mono text-indigo-600 font-bold w-16">{act.time}</span>
-                  <p className="text-gray-700">{act.activity}</p>
-                </div>
-              ))}
+        {/* Summary Card */}
+        <div className="bg-white rounded-3xl shadow-xl p-8 mb-12 border border-gray-100">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white">
+              ✨
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold">
+                Trip Overview
+              </h2>
+              <p className="text-gray-500">
+                AI-generated travel summary
+              </p>
             </div>
           </div>
-        ))}
+
+          <p className="text-gray-700 leading-relaxed text-lg">
+            {trip.itinerary.tripSummary}
+          </p>
+        </div>
+
+        {/* Timeline */}
+        <div className="space-y-12">
+
+          {trip.itinerary.days.map((day) => (
+            <div
+              key={day.day}
+              className="relative"
+            >
+
+              <div className="flex items-center gap-4 mb-6">
+
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  {day.day}
+                </div>
+
+                <div>
+                  <h3 className="text-3xl font-bold text-gray-900">
+                    Day {day.day}
+                  </h3>
+
+                  <p className="text-gray-500">
+                    {day.title}
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="ml-7 border-l-2 border-indigo-200 pl-10 space-y-5">
+
+                {day.activities.map((act, idx) => (
+                  <div
+                    key={idx}
+                    className="relative bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-xl transition"
+                  >
+
+                    <div className="absolute -left-[50px] top-6 w-4 h-4 rounded-full bg-indigo-600"></div>
+
+                    <div className="flex flex-col md:flex-row md:items-start gap-4">
+
+                      <div className="bg-indigo-50 text-indigo-700 px-3 py-2 rounded-xl font-bold min-w-fit">
+                        {act.time}
+                      </div>
+
+                      <p className="text-gray-700 leading-relaxed">
+                        {act.activity}
+                      </p>
+
+                    </div>
+                  </div>
+                ))}
+
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+
       </div>
+
     </div>
   );
+
 }
