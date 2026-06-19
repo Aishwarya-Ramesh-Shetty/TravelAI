@@ -147,7 +147,7 @@ export default function ItineraryView() {
                         "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200"
                       }
                       alt={act.placeName || "Travel Destination"}
-                      className="w-full h-64 object-cover"
+                      className="w-full h-72 object-cover"
                     />
 
                     <div className="p-6">

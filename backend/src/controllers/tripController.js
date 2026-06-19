@@ -61,7 +61,7 @@ exports.createTrip = async (req, res) => {
             if (activity.placeName) {
               activity.imageUrl =
                 await getPlaceImage(
-                  activity.placeName
+                  activity.placeName,destination
                 );
             } else {
               activity.imageUrl = null;
