@@ -3,6 +3,25 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../api/axios';
 import { Download, Share2, MapPin, Calendar } from 'lucide-react';
 import toast from 'react-hot-toast';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup
+} from "react-leaflet";
+
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 export default function ItineraryView() {
   const { id } = useParams();
@@ -13,6 +32,10 @@ export default function ItineraryView() {
       return data;
     }
   });
+
+  const locations =
+    trip?.itinerary?.days?.flatMap(day => day.activities)
+      ?.filter(act => act.coordinates?.lat && act.coordinates?.lng) || [];
 
   const handleDownload = () => {
     window.open(`${import.meta.env.VITE_API_URL}/trips/${id}/pdf`, '_blank');
@@ -102,6 +125,91 @@ export default function ItineraryView() {
           </p>
         </div>
 
+        {/* Map Section */}
+        <div className="bg-white rounded-3xl shadow-xl p-6 mb-12 border border-gray-100">
+
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-2xl font-bold">
+                🗺️ Trip Map
+              </h2>
+              <p className="text-gray-500">
+                Explore all attractions on an interactive map
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {locations.slice(0, 10).map((place, idx) => (
+              <span
+                key={idx}
+                className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium"
+              >
+                📍 {place.placeName}
+              </span>
+            ))}
+          </div>
+
+          <div className="overflow-hidden rounded-2xl border border-gray-200">
+
+            {locations.length > 0 ? (
+              <MapContainer
+                center={[
+                  Number(locations[0].coordinates.lat),
+                  Number(locations[0].coordinates.lng)
+                ]}
+                zoom={12}
+                style={{
+                  height: "500px",
+                  width: "100%"
+                }}
+              >
+                <TileLayer
+                  attribution="&copy; OpenStreetMap contributors"
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+
+                {locations.map((place, index) => (
+                  <Marker
+                    key={index}
+                    position={[
+                      Number(place.coordinates.lat),
+                      Number(place.coordinates.lng)
+                    ]}
+                  >
+                    <Popup>
+                      <div className="min-w-[200px]">
+
+                        {place.imageUrl && (
+                          <img
+                            src={place.imageUrl}
+                            alt={place.placeName}
+                            className="w-full h-24 object-cover rounded-lg mb-2"
+                          />
+                        )}
+
+                        <h3 className="font-bold">
+                          {place.placeName}
+                        </h3>
+
+                        <p className="text-sm text-gray-600 mt-1">
+                          {place.activity}
+                        </p>
+
+                      </div>
+                    </Popup>
+                  </Marker>
+                ))}
+              </MapContainer>
+            ) : (
+              <div className="h-[500px] flex items-center justify-center text-gray-500">
+                No map locations available
+              </div>
+            )}
+
+          </div>
+        </div>
+
         {/* Timeline */}
         <div className="space-y-12">
 
@@ -138,7 +246,7 @@ export default function ItineraryView() {
                     className="relative bg-white rounded-3xl overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl transition duration-300"
                   >
 
-                    
+
                     <div className="absolute -left-[50px] top-6 w-4 h-4 rounded-full bg-indigo-600"></div>
 
                     <img

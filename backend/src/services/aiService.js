@@ -45,7 +45,32 @@ Schema:
 }
 `;
 
-  const result = await model.generateContent(prompt);
+  let result;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      result = await model.generateContent(prompt);
+      break;
+    } catch (error) {
+
+      if (
+        attempt < 3 &&
+        error.message.includes("503")
+      ) {
+        console.log(
+          `Retrying Gemini... Attempt ${attempt}`
+        );
+
+        await new Promise(resolve =>
+          setTimeout(resolve, 3000)
+        );
+
+        continue;
+      }
+
+      throw error;
+    }
+  }
 
   return JSON.parse(
     cleanJSON(result.response.text())
@@ -104,7 +129,32 @@ Required Schema:
 }
 `;
 
-  const result = await model.generateContent(prompt);
+  let result;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      result = await model.generateContent(prompt);
+      break;
+    } catch (error) {
+
+      if (
+        attempt < 3 &&
+        error.message.includes("503")
+      ) {
+        console.log(
+          `Retrying Gemini... Attempt ${attempt}`
+        );
+
+        await new Promise(resolve =>
+          setTimeout(resolve, 3000)
+        );
+
+        continue;
+      }
+
+      throw error;
+    }
+  }
 
   return JSON.parse(
     cleanJSON(result.response.text())

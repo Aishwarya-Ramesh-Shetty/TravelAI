@@ -3,6 +3,7 @@ const ocrService = require('../services/ocrService');
 const aiService = require('../services/aiService');
 const { getPlaceImage } = require('../services/pexelsService');
 const { v4: uuidv4 } = require('uuid');
+const { getCoordinates } = require('../services/geocodingService');
 
 exports.uploadAndExtract = async (req, res) => {
   try {
@@ -57,16 +58,21 @@ exports.createTrip = async (req, res) => {
       for (const day of itinerary.days) {
         if (day.activities && day.activities.length > 0) {
           for (const activity of day.activities) {
+            const coords = await getCoordinates(activity.placeName);
+
+            console.log("Place:", activity.placeName);
+            console.log("Coords:", coords);
+
+            activity.coordinates = coords;
 
             if (activity.placeName) {
-              activity.imageUrl =
-                await getPlaceImage(
-                  activity.placeName,destination
-                );
+              activity.imageUrl = await getPlaceImage(
+                activity.placeName,
+                destination
+              );
             } else {
               activity.imageUrl = null;
             }
-
           }
         }
       }

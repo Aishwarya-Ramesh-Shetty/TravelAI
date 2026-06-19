@@ -9,14 +9,16 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.0",
-    "axios": "^1.7.9",
+    "axios": "^1.18.0",
     "framer-motion": "^11.13.1",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.5",
     "react-hook-form": "^7.54.0",
     "react-hot-toast": "^2.4.1",
+    "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.0.2",
     "tailwind-merge": "^2.5.5"
   },

@@ -22,7 +22,11 @@ const tripSchema = new mongoose.Schema({
           activity: String,
           estimatedCost: String,
           bestTimeToVisit: String,
-          imageUrl: String
+          imageUrl: String,
+          coordinates: {
+            lat: String,
+            lng: String
+          }
         }
       ]
     }],
