@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Upload from './pages/Upload';
 import Review from './pages/Review';
 import ItineraryView from './pages/ItineraryView';
+import PlaceDetails from "./pages/PlaceDetails";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -28,6 +29,10 @@ function App() {
             <Route path="/upload" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
             <Route path="/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
             <Route path="/itinerary/:id" element={<ProtectedRoute><ItineraryView /></ProtectedRoute>} />
+            <Route
+              path="/place/:tripId/:dayId/:activityId"
+              element={<PlaceDetails />}
+            />
             <Route path="/" element={<Navigate to="/dashboard" />} />
           </Routes>
           <Toaster position="bottom-right" />

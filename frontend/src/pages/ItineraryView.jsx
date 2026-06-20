@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../api/axios';
 import { Download, Share2, MapPin, Calendar } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import {
   MapContainer,
   TileLayer,
@@ -48,6 +49,10 @@ export default function ItineraryView() {
   };
 
   if (isLoading) return <div className="p-10 text-center">Loading Itinerary...</div>;
+
+
+
+  const navigate = useNavigate();
 
   return (
 
@@ -243,7 +248,18 @@ export default function ItineraryView() {
 
                   <div
                     key={idx}
-                    className="relative bg-white rounded-3xl overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl transition duration-300"
+                    onClick={() =>
+                      navigate(
+                        `/place/${trip._id}/${day.day}/${idx}`,
+                        {
+                          state: {
+                            place: act,
+                            destination: trip.destination
+                          }
+                        }
+                      )
+                    }
+                    className="cursor-pointer relative bg-white rounded-3xl overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[1.02] transition duration-300"
                   >
 
 
