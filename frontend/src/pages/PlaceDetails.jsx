@@ -1,5 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { MapPin, ArrowLeft } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import api from "../api/axios";
+
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
+
+import "leaflet/dist/leaflet.css";
 
 export default function PlaceDetails() {
   const location = useLocation();
@@ -25,6 +36,30 @@ export default function PlaceDetails() {
       </div>
     );
   }
+
+  const { data: details } = useQuery({
+    queryKey: [
+      "place-details",
+      place.placeName
+    ],
+    queryFn: async () => {
+      const { data } =
+        await api.get(
+          "/trips/place-details",
+          {
+            params: {
+              placeName:
+                place.placeName,
+              destination
+            }
+          }
+        );
+
+      return data;
+    }
+  });
+
+
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -61,41 +96,101 @@ export default function PlaceDetails() {
 
       <div className="max-w-6xl mx-auto p-8">
 
-        <div className="grid md:grid-cols-2 gap-6">
+        {/* AI Description */}
+        <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+          <h2 className="text-3xl font-bold mb-4">
+            About {place.placeName}
+          </h2>
+
+          <p className="text-gray-700 leading-relaxed">
+            {details?.description || place.activity}
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
 
           <div className="bg-white p-6 rounded-3xl shadow">
-            <h2 className="text-2xl font-bold mb-4">
-              About This Place
-            </h2>
-
-            <p className="text-gray-600 leading-relaxed">
-              {place.activity}
-            </p>
+            <div className="text-3xl mb-2">⏰</div>
+            <h3 className="font-bold">Best Time</h3>
+            <p>{place.bestTimeToVisit || "Anytime"}</p>
           </div>
 
           <div className="bg-white p-6 rounded-3xl shadow">
+            <div className="text-3xl mb-2">💰</div>
+            <h3 className="font-bold">Estimated Cost</h3>
+            <p>{place.estimatedCost || "Not Available"}</p>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow">
+            <div className="text-3xl mb-2">📍</div>
+            <h3 className="font-bold">Location</h3>
+            <p>{destination}</p>
+          </div>
+
+        </div>
+
+        {place.coordinates && (
+          <div className="bg-white rounded-3xl shadow-lg p-6 mb-8">
+
             <h2 className="text-2xl font-bold mb-4">
-              Travel Information
+              🗺 Location Map
             </h2>
 
-            <p className="mb-3">
-              ⏰ Best Time:
-              {" "}
-              {place.bestTimeToVisit || "Anytime"}
-            </p>
+            <MapContainer
+              center={[
+                Number(place.coordinates.lat),
+                Number(place.coordinates.lng)
+              ]}
+              zoom={15}
+              style={{
+                height: "400px",
+                width: "100%",
+                borderRadius: "16px"
+              }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
 
-            <p>
-              💰 Estimated Cost:
-              {" "}
-              {place.estimatedCost || "Not Available"}
-            </p>
+              <Marker
+                position={[
+                  Number(place.coordinates.lat),
+                  Number(place.coordinates.lng)
+                ]}
+              >
+                <Popup>
+                  {place.placeName}
+                </Popup>
+              </Marker>
+            </MapContainer>
+
+          </div>
+        )}
+
+        <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+
+          <h2 className="text-2xl font-bold mb-4">
+            Nearby Attractions
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {details?.nearbyAttractions?.map((item, idx) => (
+              <div
+                key={idx}
+                className="border rounded-xl p-4"
+              >
+                📍 {item}
+              </div>
+            ))}
           </div>
 
         </div>
 
         <a
           href={`https://www.google.com/maps/search/${encodeURIComponent(
-            place.placeName
+            `${place.placeName} ${destination}`
+
           )}`}
           target="_blank"
           rel="noreferrer"

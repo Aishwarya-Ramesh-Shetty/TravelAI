@@ -26,6 +26,7 @@ L.Icon.Default.mergeOptions({
 
 export default function ItineraryView() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data: trip, isLoading } = useQuery({
     queryKey: ['trip', id],
     queryFn: async () => {
@@ -52,7 +53,7 @@ export default function ItineraryView() {
 
 
 
-  const navigate = useNavigate();
+  
 
   return (
 

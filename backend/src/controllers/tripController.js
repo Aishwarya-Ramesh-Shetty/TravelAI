@@ -122,3 +122,25 @@ exports.getTripById = async (req, res) => {
 
   res.json(trip);
 };
+
+
+exports.getPlaceDetails = async (req, res) => {
+  try {
+
+    const { placeName, destination } =
+      req.query;
+
+    const details =
+      await aiService.generatePlaceDetails(
+        placeName,
+        destination
+      );
+
+    res.json(details);
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};

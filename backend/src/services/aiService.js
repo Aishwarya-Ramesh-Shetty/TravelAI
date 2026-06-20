@@ -160,3 +160,34 @@ Required Schema:
     cleanJSON(result.response.text())
   );
 };
+
+
+exports.generatePlaceDetails = async (
+  placeName,
+  destination
+) => {
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash"
+  });
+
+  const prompt = `
+  Give travel information for ${placeName} in ${destination}.
+
+  Return ONLY JSON:
+
+  {
+    "description": "",
+    "history": "",
+    "highlights": [],
+    "travelTips": [],
+    "nearbyAttractions": []
+  }
+  `;
+
+  const result =
+    await model.generateContent(prompt);
+
+  return JSON.parse(
+    cleanJSON(result.response.text())
+  );
+};
