@@ -1,127 +1,123 @@
 # 🌍 TravelAI
 
-AI-powered travel planner that transforms travel bookings into personalized itineraries with destination insights, attraction images, interactive maps, and downloadable travel plans.
+AI-powered travel planning platform that transforms travel bookings into personalized itineraries with attraction images, interactive maps, AI-generated place guides, and downloadable travel plans.
+
+## 🚀 Live Demo
+
+Frontend: https://travelai-omega.vercel.app
+
+Backend API: https://travelai-backend-5lao.onrender.com
 
 ---
 
 ## ✨ Features
 
-### 📄 Smart Travel Document Processing
-- Upload flight tickets, hotel bookings, and travel documents
-- OCR-powered text extraction
-- Automatic travel information parsing using Gemini AI
+### 📄 Smart Document Processing
+
+* Upload flight tickets, hotel bookings, and travel documents
+* OCR-powered text extraction
+* Automatic travel information parsing using Google Gemini AI
 
 ### 🤖 AI Itinerary Generation
-- Generates day-wise travel plans
-- Creates activity schedules with timings
-- Suggests attractions and experiences
-- Provides travel tips and recommendations
 
-### 🖼️ Attraction Images
-- Automatically fetches destination and attraction images using Pexels API
-- Beautiful visual itinerary cards
-- Destination-specific image search for higher accuracy
+* Generates complete day-wise travel itineraries
+* Creates activity schedules with timings
+* Suggests attractions and experiences
+* Provides travel recommendations and tips
 
-### 📍 Interactive Place Explorer
-- Click any attraction to open a dedicated details page
-- View attraction information
-- Google Maps integration
-- Interactive location experience
+### 🖼️ Dynamic Attraction Images
 
-### 🗺️ Location Services
-- OpenStreetMap geocoding integration
-- Automatic attraction coordinates generation
-- Location-aware travel recommendations
+* Automatically fetches attraction images using Pexels API
+* Destination-aware image search for higher accuracy
+* Rich visual travel experience
 
-### 📚 AI Place Guide
-- AI-generated attraction descriptions
-- Nearby attraction recommendations
-- Travel insights powered by Gemini AI
+### 📍 Interactive Place Details
 
-### 📄 PDF Export
-- Download itineraries as PDFs
-- Share travel plans with others
+* Dedicated page for every attraction
+* Attraction information and travel insights
+* Google Maps integration
+* AI-powered place descriptions
 
-### 🔗 Shareable Trips
-- Unique share links for itineraries
-- Easy collaboration with friends and family
+### 🗺️ Maps & Location Services
+
+* OpenStreetMap Geocoding
+* Location coordinate generation
+* Interactive map support
+* Direct Google Maps navigation
 
 ### 🔐 Authentication
-- JWT Authentication
-- Secure user accounts
-- Protected travel data
+
+* JWT-based authentication
+* Secure user accounts
+* Protected itinerary management
+
+### 📄 PDF Export
+
+* Download itineraries as PDF
+* Share travel plans with friends and family
+
+### 🔗 Trip Sharing
+
+* Unique shareable itinerary links
+* Easy travel collaboration
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React.js
-- React Router
-- React Query
-- Tailwind CSS
-- React Hook Form
-- React Hot Toast
-- Leaflet Maps
-- Lucide React Icons
+
+* React.js
+* React Router
+* React Query
+* Tailwind CSS
+* React Hook Form
+* React Hot Toast
+* Leaflet Maps
+* Lucide React
 
 ### Backend
-- Node.js
-- Express.js
-- MongoDB Atlas
-- Mongoose
+
+* Node.js
+* Express.js
+* MongoDB Atlas
+* Mongoose
 
 ### AI & APIs
-- Google Gemini AI
-- Pexels API
-- OpenStreetMap Nominatim API
-- OCR Processing
+
+* Google Gemini AI
+* Pexels API
+* OpenStreetMap Nominatim API
+* OCR Processing
+
+### Deployment
+
+* Vercel (Frontend)
+* Render (Backend)
+* MongoDB Atlas (Database)
 
 ---
 
-## 🚀 Key Highlights
+## 📸 Workflow
 
-- AI-Powered Travel Planning
-- OCR-Based Travel Document Understanding
-- Dynamic Attraction Image Generation
-- Interactive Place Exploration
-- Google Maps Integration
-- Real-Time Travel Insights
-- Responsive Modern UI
-- Secure Authentication
-
----
-
-## 📸 Application Flow
-
-### 1. Upload Documents
-Users upload travel-related documents.
-
-### 2. AI Extraction
-Travel information is extracted automatically.
-
-### 3. Generate Itinerary
-Gemini AI creates a detailed travel plan.
-
-### 4. Explore Attractions
-Each attraction includes:
-- Image
-- Timing
-- Cost Information
-- Best Time to Visit
-
-### 5. Place Details
-Click any attraction to:
-- View detailed information
-- Explore nearby attractions
-- Open location in Google Maps
-
-### 6. Download & Share
-Export itinerary as PDF or share via unique links.
+1. Upload travel-related documents
+2. OCR extracts booking information
+3. Gemini AI generates a personalized itinerary
+4. Attraction images are fetched dynamically
+5. Users explore attraction details
+6. Open locations directly in Google Maps
+7. Download or share the itinerary
 
 ---
 
 ## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Aishwarya-Ramesh-Shetty/TravelAI.git
+cd TravelAI
+```
 
 ### Frontend
 
@@ -143,27 +139,34 @@ npm run dev
 
 ## 🔑 Environment Variables
 
-### Backend
+### Backend (.env)
 
 ```env
 MONGO_URI=
 JWT_SECRET=
 GEMINI_API_KEY=
 PEXELS_API_KEY=
+CLIENT_URL=
+```
+
+### Frontend (.env)
+
+```env
+VITE_API_URL=
 ```
 
 ---
 
 ## 🎯 Future Enhancements
 
-- Weather Forecast Integration
-- Hotel Recommendations
-- Budget Tracking
-- Restaurant Suggestions
-- Nearby Attractions Maps
-- AI Packing Checklist
-- Flight Status Tracking
-- Multi-language Support
+* Weather Forecast Integration
+* Budget Estimation
+* AI Packing Checklist
+* Restaurant Recommendations
+* Multi-language Support
+* Hotel Suggestions
+* Flight Tracking
+* Expense Analytics
 
 ---
 
@@ -171,7 +174,7 @@ PEXELS_API_KEY=
 
 **Aishwarya Shetty**
 
-Computer Science Engineering (Data Science)
+BE Computer Science & Engineering (Data Science)
 
 Full Stack Developer | MERN Stack | AI Applications
 
