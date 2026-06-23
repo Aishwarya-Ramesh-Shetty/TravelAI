@@ -3,14 +3,51 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const cleanJSON = (text) => {
-  return text.replace(/`json|`/gi, "").trim();
+  return text.replace(/```json|```/gi, "").trim();
+};
+
+const generateWithRetry = async (prompt) => {
+  const models = [
+    "gemini-2.5-flash",
+  ];
+
+  let lastError;
+
+  for (const modelName of models) {
+    const model = genAI.getGenerativeModel({
+      model: modelName,
+    });
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const result = await model.generateContent(prompt);
+        return result.response.text();
+      } catch (error) {
+        lastError = error;
+
+        console.log(
+          `${modelName} failed. Attempt ${attempt}`
+        );
+
+        if (
+          attempt < 3 &&
+          error.message.includes("503")
+        ) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, 3000)
+          );
+          continue;
+        }
+
+        break;
+      }
+    }
+  }
+
+  throw lastError;
 };
 
 exports.extractDataFromText = async (text) => {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
-  });
-
   const prompt = `
 Extract travel booking information from the following text:
 
@@ -20,68 +57,40 @@ Return ONLY valid JSON.
 
 Schema:
 {
-"destination": "",
-"startDate": "YYYY-MM-DD",
-"endDate": "YYYY-MM-DD",
-"flights": [
-{
-"airline": "",
-"flightNumber": "",
-"departureCity": "",
-"arrivalCity": "",
-"departureTime": "",
-"arrivalTime": ""
-}
-],
-"hotels": [
-{
-"hotelName": "",
-"checkIn": "",
-"checkOut": "",
-"address": ""
-}
-],
-"transportation": []
+  "destination": "",
+  "startDate": "YYYY-MM-DD",
+  "endDate": "YYYY-MM-DD",
+  "flights": [
+    {
+      "airline": "",
+      "flightNumber": "",
+      "departureCity": "",
+      "arrivalCity": "",
+      "departureTime": "",
+      "arrivalTime": ""
+    }
+  ],
+  "hotels": [
+    {
+      "hotelName": "",
+      "checkIn": "",
+      "checkOut": "",
+      "address": ""
+    }
+  ],
+  "transportation": []
 }
 `;
 
-  let result;
-
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      result = await model.generateContent(prompt);
-      break;
-    } catch (error) {
-
-      if (
-        attempt < 3 &&
-        error.message.includes("503")
-      ) {
-        console.log(
-          `Retrying Gemini... Attempt ${attempt}`
-        );
-
-        await new Promise(resolve =>
-          setTimeout(resolve, 3000)
-        );
-
-        continue;
-      }
-
-      throw error;
-    }
-  }
+  const responseText =
+    await generateWithRetry(prompt);
 
   return JSON.parse(
-    cleanJSON(result.response.text())
+    cleanJSON(responseText)
   );
 };
 
 exports.generateItinerary = async (data) => {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
-  });
-
   const prompt = `
 Generate a detailed and realistic travel itinerary.
 
@@ -107,87 +116,73 @@ Instructions:
 Required Schema:
 
 {
-"tripSummary": "",
-"destination": "",
-"totalDays": 0,
-"days": [
-{
-"day": 1,
-"title": "",
-"activities": [
-{
-"time": "",
-"placeName": "",
-"activity": "",
-"estimatedCost": "",
-"bestTimeToVisit": ""
-}
-]
-}
-],
-"travelTips": []
+  "tripSummary": "",
+  "destination": "",
+  "totalDays": 0,
+  "days": [
+    {
+      "day": 1,
+      "title": "",
+      "activities": [
+        {
+          "time": "",
+          "placeName": "",
+          "activity": "",
+          "estimatedCost": "",
+          "bestTimeToVisit": ""
+        }
+      ]
+    }
+  ],
+  "travelTips": []
 }
 `;
 
-  let result;
-
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      result = await model.generateContent(prompt);
-      break;
-    } catch (error) {
-
-      if (
-        attempt < 3 &&
-        error.message.includes("503")
-      ) {
-        console.log(
-          `Retrying Gemini... Attempt ${attempt}`
-        );
-
-        await new Promise(resolve =>
-          setTimeout(resolve, 3000)
-        );
-
-        continue;
-      }
-
-      throw error;
-    }
-  }
+  const responseText =
+    await generateWithRetry(prompt);
 
   return JSON.parse(
-    cleanJSON(result.response.text())
+    cleanJSON(responseText)
   );
 };
-
 
 exports.generatePlaceDetails = async (
   placeName,
   destination
 ) => {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash"
-  });
-
   const prompt = `
-  Give travel information for ${placeName} in ${destination}.
+Generate detailed travel information for:
 
-  Return ONLY JSON:
+Place: ${placeName}
+Destination: ${destination}
 
-  {
-    "description": "",
-    "history": "",
-    "highlights": [],
-    "travelTips": [],
-    "nearbyAttractions": []
-  }
-  `;
+Return ONLY valid JSON.
 
-  const result =
-    await model.generateContent(prompt);
+Schema:
+{
+  "about": "",
+  "history": "",
+  "interestingFacts": [
+    ""
+  ],
+  "entryFee": "",
+  "openingHours": "",
+  "visitorTips": [
+    ""
+  ],
+  "nearbyAttractions": [
+    {
+      "name": "",
+      "description": ""
+    }
+  ]
+}
+`;
+
+  const responseText =
+    await generateWithRetry(prompt);
 
   return JSON.parse(
-    cleanJSON(result.response.text())
+    cleanJSON(responseText)
   );
 };
