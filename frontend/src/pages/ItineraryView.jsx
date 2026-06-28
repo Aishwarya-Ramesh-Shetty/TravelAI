@@ -10,10 +10,11 @@ import {
   Marker,
   Popup
 } from "react-leaflet";
-
+import WeatherCard from "../components/WeatherCard";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 delete L.Icon.Default.prototype._getIconUrl;
+
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -35,6 +36,24 @@ export default function ItineraryView() {
     }
   });
 
+  const { data: weather } = useQuery({
+    queryKey: ["weather", trip?.destination],
+    enabled:
+      !!trip?.itinerary?.days?.length &&
+      !!trip?.itinerary?.days[0]?.activities?.length &&
+      !!trip?.itinerary?.days[0]?.activities[0]?.coordinates,
+    queryFn: async () => {
+      const { data } = await api.get("/weather", {
+        params: {
+          lat: trip.itinerary.days[0].activities[0].coordinates.lat,
+          lng: trip.itinerary.days[0].activities[0].coordinates.lng,
+        },
+      });
+
+      return data;
+    },
+  });
+
   const locations =
     trip?.itinerary?.days?.flatMap(day => day.activities)
       ?.filter(act => act.coordinates?.lat && act.coordinates?.lng) || [];
@@ -53,7 +72,7 @@ export default function ItineraryView() {
 
 
 
-  
+
 
   return (
 
@@ -105,6 +124,13 @@ export default function ItineraryView() {
 
           </div>
         </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 mt-8">
+        <WeatherCard
+          weather={weather}
+          title={`Current Weather in ${trip.destination}`}
+        />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-10">

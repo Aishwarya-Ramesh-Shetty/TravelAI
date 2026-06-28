@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MapPin, ArrowLeft } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../api/axios";
-
+import WeatherCard from "../components/WeatherCard";
 import {
   MapContainer,
   TileLayer,
@@ -39,6 +39,21 @@ export default function PlaceDetails() {
 
       return data;
     }
+  });
+
+  const { data: weather } = useQuery({
+    queryKey: ["weather", place?.placeName],
+    enabled: !!place?.coordinates,
+    queryFn: async () => {
+      const { data } = await api.get("/weather", {
+        params: {
+          lat: place.coordinates.lat,
+          lng: place.coordinates.lng,
+        },
+      });
+
+      return data;
+    },
   });
 
   if (!place) {
@@ -91,12 +106,19 @@ export default function PlaceDetails() {
           </h1>
 
           <p className="text-xl mt-2">
-            📍 {destination}
+            📍 {place.city
+              ? `${place.city}, ${place.country}`
+              : destination}
           </p>
         </div>
 
       </div>
+
       <div className="max-w-6xl mx-auto p-8">
+        <WeatherCard
+          weather={weather}
+          title={`Current Weather at ${place.placeName}`}
+        />
         {/* About */}
         <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
           <h2 className="text-3xl font-bold mb-4">
@@ -264,8 +286,9 @@ export default function PlaceDetails() {
 
         <a
           href={`https://www.google.com/maps/search/${encodeURIComponent(
-            `${place.placeName} ${destination}`
-
+            place.city
+              ? `${place.placeName}, ${place.city}, ${place.country}`
+              : `${place.placeName}, ${destination}`
           )}`}
           target="_blank"
           rel="noreferrer"

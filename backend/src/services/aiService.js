@@ -113,6 +113,30 @@ Instructions:
 * Include best time to visit.
 * Include useful travel tips.
 
+IMPORTANT:
+
+For every activity:
+
+- placeName should only contain the actual attraction name.
+- city should contain the city where the attraction is located.
+- country should contain the country.
+
+Examples:
+
+Trevi Fountain
+city: Rome
+country: Italy
+
+Eiffel Tower
+city: Paris
+country: France
+
+Sydney Opera House
+city: Sydney
+country: Australia
+
+Do NOT combine multiple places into one placeName.
+
 Required Schema:
 
 {
@@ -127,6 +151,8 @@ Required Schema:
         {
           "time": "",
           "placeName": "",
+          "city": "",
+          "country": "",
           "activity": "",
           "estimatedCost": "",
           "bestTimeToVisit": ""

@@ -19,13 +19,15 @@ const tripSchema = new mongoose.Schema({
         {
           time: String,
           placeName: String,
+          city: String,
+          country: String,
           activity: String,
           estimatedCost: String,
           bestTimeToVisit: String,
           imageUrl: String,
           coordinates: {
             lat: String,
-            lng: String
+            lng: String,
           }
         }
       ]

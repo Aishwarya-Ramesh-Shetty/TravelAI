@@ -58,8 +58,10 @@ exports.createTrip = async (req, res) => {
       for (const day of itinerary.days) {
         if (day.activities && day.activities.length > 0) {
           for (const activity of day.activities) {
-            const coords = await getCoordinates(activity.placeName);
-
+            const coords = await getCoordinates(
+              `${activity.placeName}, ${activity.city}, ${activity.country}`
+            );
+            await new Promise(resolve => setTimeout(resolve, 1000));
             console.log("Place:", activity.placeName);
             console.log("Coords:", coords);
 

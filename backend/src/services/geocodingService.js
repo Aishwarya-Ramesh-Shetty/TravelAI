@@ -1,7 +1,18 @@
 const axios = require("axios");
+const cache = require("./geocodeCache");
 
 const getCoordinates = async (placeName) => {
   try {
+    const key = placeName.toLowerCase();
+
+    // Check cache first
+    if (cache.has(key)) {
+      console.log("Using cached coordinates:", placeName);
+      return cache.get(key);
+    }
+
+    console.log("Searching:", placeName);
+
     const response = await axios.get(
       "https://nominatim.openstreetmap.org/search",
       {
@@ -16,14 +27,18 @@ const getCoordinates = async (placeName) => {
       }
     );
 
-    console.log("Searching:", placeName);
     console.log("Result:", response.data);
 
     if (response.data.length > 0) {
-      return {
+      const coords = {
         lat: response.data[0].lat,
         lng: response.data[0].lon,
       };
+
+      // Save in cache
+      cache.set(key, coords);
+
+      return coords;
     }
 
     return null;
