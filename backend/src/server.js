@@ -8,6 +8,8 @@ require('dotenv').config();
 const authRoutes = require('./routes/authRoutes');
 const tripRoutes = require('./routes/tripRoutes');
 const shareRoutes = require('./routes/shareRoutes');
+const weatherRoutes =
+require("./routes/weatherRoutes");
 
 const app = express();
 
@@ -28,6 +30,7 @@ app.use('/api/', limiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/trips', tripRoutes);
 app.use('/api/share', shareRoutes);
+app.use("/api/weather", weatherRoutes);
 
 // Health Check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
