@@ -34,8 +34,13 @@ const getWeather = async (lat, lng) => {
     return response.data;
 
   } catch (err) {
-    console.log("Weather API Error:", err.response?.status);
-    console.log(err.response?.data);
+    console.error("========== WEATHER ERROR ==========");
+    console.error("Message:", err.message);
+    console.error("Status:", err.response?.status);
+    console.error("Data:", err.response?.data);
+    console.error("URL:", err.config?.url);
+    console.error("Params:", err.config?.params);
+    console.error("===================================");
 
     throw err;
   }
