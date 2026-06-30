@@ -45,13 +45,18 @@ exports.createTrip = async (req, res) => {
     } = req.body;
 
 
-    const itinerary =
+    let itinerary =
       await aiService.generateItinerary({
         destination,
         startDate,
         endDate,
         ...extractedData
       });
+
+    console.log("Enhancing itinerary with AI...");
+
+    itinerary =
+      await aiService.enrichItinerary(itinerary);
 
     // Attach images to activities
     if (itinerary.days && itinerary.days.length > 0) {
@@ -126,30 +131,30 @@ exports.getTripById = async (req, res) => {
 };
 
 
-exports.getPlaceDetails = async (
-  req,
-  res
-) => {
-  try {
+// exports.getPlaceDetails = async (
+//   req,
+//   res
+// ) => {
+//   try {
 
-    const {
-      placeName,
-      destination
-    } = req.query;
+//     const {
+//       placeName,
+//       destination
+//     } = req.query;
 
-    const details =
-      await aiService.generatePlaceDetails(
-        placeName,
-        destination
-      );
+//     const details =
+//       await aiService.generatePlaceDetails(
+//         placeName,
+//         destination
+//       );
 
-    res.json(details);
+//     res.json(details);
 
-  } catch (error) {
+//   } catch (error) {
 
-    res.status(500).json({
-      message: error.message
-    });
+//     res.status(500).json({
+//       message: error.message
+//     });
 
-  }
-};
+//   }
+// };

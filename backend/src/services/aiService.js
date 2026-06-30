@@ -173,49 +173,91 @@ Required Schema:
   );
 };
 
-exports.generatePlaceDetails = async (
-  placeName,
-  destination
-) => {
+// exports.generatePlaceDetails = async (
+//   placeName,
+//   destination
+// ) => {
+//   const prompt = `
+// Generate detailed travel information for:
+
+// Place: ${placeName}
+// Destination: ${destination}
+
+// Return ONLY valid JSON.
+// Rules:
+
+// - Return ONLY valid JSON.
+// - Do NOT use markdown.
+// - Do NOT use **bold**, bullet points, or numbered lists.
+// - Every field should contain detailed, natural language.
+// - The "description" should be between 120 and 200 words.
+// - The description should explain what the place is, why it is famous, its architecture or natural beauty, what visitors can experience there, and why it is worth visiting.
+// - The history should be around 100-150 words.
+// - Opening hours should be concise.
+// - Entry fee should be realistic if known, otherwise "Varies".
+// - Nearby attractions should contain both a name and a short description.
+
+// Schema:
+// {
+//   "about": "",
+//   "history": "",
+//   "interestingFacts": [
+//     ""
+//   ],
+//   "entryFee": "",
+//   "openingHours": "",
+//   "visitorTips": [
+//     ""
+//   ],
+//   "nearbyAttractions": [
+//     {
+//       "name": "",
+//       "description": ""
+//     }
+//   ]
+// }
+// `;
+
+//   const responseText =
+//     await generateWithRetry(prompt);
+
+//   return JSON.parse(
+//     cleanJSON(responseText)
+//   );
+// };
+
+
+exports.enrichItinerary = async (itinerary) => {
+
   const prompt = `
-Generate detailed travel information for:
+You are a travel expert.
 
-Place: ${placeName}
-Destination: ${destination}
+Below is a generated travel itinerary.
 
-Return ONLY valid JSON.
+${JSON.stringify(itinerary)}
+
+Your task:
+
+For EVERY activity, enrich it with:
+
+- description (120-180 words)
+- history (80-120 words)
+- highlights (3-5)
+- entryFee
+- openingHours
+- travelTips (3-5)
+- nearbyAttractions (3-5)
+
 Rules:
 
+- Keep every existing field unchanged.
+- Do NOT remove any activities.
+- Do NOT change timings.
 - Return ONLY valid JSON.
-- Do NOT use markdown.
-- Do NOT use **bold**, bullet points, or numbered lists.
-- Every field should contain detailed, natural language.
-- The "description" should be between 120 and 200 words.
-- The description should explain what the place is, why it is famous, its architecture or natural beauty, what visitors can experience there, and why it is worth visiting.
-- The history should be around 100-150 words.
-- Opening hours should be concise.
-- Entry fee should be realistic if known, otherwise "Varies".
-- Nearby attractions should contain both a name and a short description.
+- No markdown.
+- No explanations.
 
-Schema:
-{
-  "about": "",
-  "history": "",
-  "interestingFacts": [
-    ""
-  ],
-  "entryFee": "",
-  "openingHours": "",
-  "visitorTips": [
-    ""
-  ],
-  "nearbyAttractions": [
-    {
-      "name": "",
-      "description": ""
-    }
-  ]
-}
+Return the COMPLETE itinerary with these new fields added to every activity.
 `;
 
   const responseText =

@@ -8,11 +8,11 @@ const Trip = require('../models/Trip');
 const { generateTripPDF } = require('../services/pdfService');
 
 router.use(protect);
-router.get(
-    "/place-details",
-    protect,
-    tripController.getPlaceDetails
-);
+// router.get(
+//     "/place-details",
+//     protect,
+//     tripController.getPlaceDetails
+// );
 router.post('/upload', upload.array('docs'), tripController.uploadAndExtract);
 router.post('/generate', tripController.createTrip);
 router.get('/', tripController.getUserTrips);
