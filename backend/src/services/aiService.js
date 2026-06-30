@@ -113,6 +113,7 @@ Instructions:
 * Include best time to visit.
 * Include useful travel tips.
 
+
 IMPORTANT:
 
 For every activity:
@@ -183,6 +184,18 @@ Place: ${placeName}
 Destination: ${destination}
 
 Return ONLY valid JSON.
+Rules:
+
+- Return ONLY valid JSON.
+- Do NOT use markdown.
+- Do NOT use **bold**, bullet points, or numbered lists.
+- Every field should contain detailed, natural language.
+- The "description" should be between 120 and 200 words.
+- The description should explain what the place is, why it is famous, its architecture or natural beauty, what visitors can experience there, and why it is worth visiting.
+- The history should be around 100-150 words.
+- Opening hours should be concise.
+- Entry fee should be realistic if known, otherwise "Varies".
+- Nearby attractions should contain both a name and a short description.
 
 Schema:
 {

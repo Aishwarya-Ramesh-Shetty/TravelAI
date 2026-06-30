@@ -137,37 +137,80 @@ export default function PlaceDetails() {
               🏛 History
             </h2>
 
-            <p className="text-gray-700 leading-relaxed">
-              {details.history}
+            <p className="text-gray-700 leading-8 whitespace-pre-line">
+              {details?.history?.replace(/\*\*/g, "")}
             </p>
           </div>
         )}
 
         {/* Information Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
 
-          <div className="bg-white p-6 rounded-3xl shadow">
-            <div className="text-3xl mb-2">⏰</div>
-            <h3 className="font-bold">Best Time</h3>
-            <p>{place.bestTimeToVisit || "Anytime"}</p>
-          </div>
+          <h2 className="text-2xl font-bold mb-6">
+            Travel Information
+          </h2>
 
-          <div className="bg-white p-6 rounded-3xl shadow">
-            <div className="text-3xl mb-2">💰</div>
-            <h3 className="font-bold">Entry Fee</h3>
-            <p>{details?.entryFee || "Varies"}</p>
-          </div>
+          <div className="grid md:grid-cols-2 gap-6">
 
-          <div className="bg-white p-6 rounded-3xl shadow">
-            <div className="text-3xl mb-2">🕒</div>
-            <h3 className="font-bold">Opening Hours</h3>
-            <p>{details?.openingHours || "Check Official Website"}</p>
-          </div>
+            <div className="flex items-start gap-4 border-b pb-5">
+              <div className="text-3xl">🕒</div>
 
-          <div className="bg-white p-6 rounded-3xl shadow">
-            <div className="text-3xl mb-2">📍</div>
-            <h3 className="font-bold">Location</h3>
-            <p>{destination}</p>
+              <div>
+                <h3 className="font-semibold text-lg">
+                  Opening Hours
+                </h3>
+
+                <p className="text-gray-600 mt-1 whitespace-pre-line">
+                  {(details?.openingHours || "Check Official Website")
+                    .replace(/\*\*/g, "")}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 border-b pb-5">
+              <div className="text-3xl">💰</div>
+
+              <div>
+                <h3 className="font-semibold text-lg">
+                  Entry Fee
+                </h3>
+
+                <p className="text-gray-600 mt-1">
+                  {details?.entryFee || "Varies"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 pt-2">
+              <div className="text-3xl">⏰</div>
+
+              <div>
+                <h3 className="font-semibold text-lg">
+                  Best Time
+                </h3>
+
+                <p className="text-gray-600 mt-1">
+                  {place.bestTimeToVisit || "Anytime"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 pt-2">
+              <div className="text-3xl">📍</div>
+
+              <div>
+                <h3 className="font-semibold text-lg">
+                  Location
+                </h3>
+
+                <p className="text-gray-600 mt-1">
+                  {place.city
+                    ? `${place.city}, ${place.country}`
+                    : destination}
+                </p>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -186,7 +229,7 @@ export default function PlaceDetails() {
                   key={idx}
                   className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl"
                 >
-                  {fact}
+                  {fact.replace(/\*\*/g, "")}
                 </div>
               ))}
             </div>
@@ -208,7 +251,7 @@ export default function PlaceDetails() {
                   key={idx}
                   className="bg-green-50 p-4 rounded-xl"
                 >
-                  {tip}
+                  {tip.replace(/\*\*/g, "")}
                 </li>
               ))}
             </ul>
@@ -219,30 +262,26 @@ export default function PlaceDetails() {
         {/* Nearby Attractions */}
         {details?.nearbyAttractions?.length > 0 && (
           <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
-
             <h2 className="text-2xl font-bold mb-6">
               📍 Nearby Attractions
             </h2>
 
             <div className="grid md:grid-cols-2 gap-5">
+              {details.nearbyAttractions.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="border rounded-2xl p-5 hover:shadow-lg transition"
+                >
+                  <h3 className="font-bold text-lg mb-2">
+                    {item.name.replace(/\*\*/g, "")}
+                  </h3>
 
-              {details.nearbyAttractions.map(
-                (item, idx) => (
-
-                  <div
-                    key={idx}
-                    className="border rounded-2xl p-5 hover:shadow-lg transition"
-                  >
-                    <p className="text-gray-700">
-                      {item}
-                    </p>
-                  </div>
-
-                )
-              )}
-
+                  <p className="text-gray-600">
+                    {item.description.replace(/\*\*/g, "")}
+                  </p>
+                </div>
+              ))}
             </div>
-
           </div>
         )}
 
