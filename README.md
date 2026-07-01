@@ -1,46 +1,55 @@
-✈️ TravelAI - AI Powered Smart Travel Planner
+# ✈️ TravelAI - AI Powered Smart Travel Planner
 
-«An AI-powered full-stack travel planning platform that transforms travel bookings into personalized itineraries with OCR, AI-generated travel plans, attraction images, interactive maps, real-time weather forecasts, detailed destination guides, and travel insights.»
+> A full-stack AI-powered travel planning platform that transforms travel bookings into personalized itineraries using OCR, Google Gemini AI, interactive maps, live weather forecasts, attraction images, and intelligent destination guides.
 
-"React" (https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
-"Node.js" (https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js)
-"MongoDB" (https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb)
-"Tailwind CSS" (https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
-"Google Gemini" (https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=for-the-badge)
-"JWT" (https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge)
-
----
-
-🌐 Live Demo
-
-Frontend: https://travelai-omega.vercel.app
-
-Backend: https://travelai-backend-5lao.onrender.com
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Google Gemini](https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=for-the-badge)
+![OpenStreetMap](https://img.shields.io/badge/OpenStreetMap-Maps-7EBC6F?style=for-the-badge)
+![Open-Meteo](https://img.shields.io/badge/OpenMeteo-Weather-0099FF?style=for-the-badge)
+![Pexels](https://img.shields.io/badge/Pexels-Images-05A081?style=for-the-badge)
 
 ---
 
-📖 Overview
+## 🌐 Live Demo
 
-TravelAI is an AI-powered travel planning application that automatically extracts travel information from uploaded booking documents and generates complete day-wise travel itineraries.
+**Frontend**
 
-Using OCR, Google Gemini AI, geocoding services, weather forecasting APIs, image search, and interactive maps, TravelAI provides travelers with a personalized travel companion that helps them plan and explore destinations more efficiently.
+https://travelai-omega.vercel.app
 
-Instead of manually researching attractions, weather, maps, and local recommendations, users receive everything in one beautifully organized itinerary.
+**Backend**
+
+https://travelai-backend-5lao.onrender.com
 
 ---
 
-✨ Features
+# 📖 Overview
 
-🔐 Authentication
+TravelAI is an intelligent travel planning platform that automatically converts travel booking documents into complete AI-generated travel itineraries.
 
-- User Registration & Login
+Users simply upload flight tickets, hotel bookings, or travel confirmations. The application extracts booking details using OCR and Google Gemini AI, generates a personalized itinerary, enriches every destination with travel information, fetches attraction images, displays interactive maps, provides live weather forecasts, and stores everything for future access.
+
+TravelAI eliminates the need to manually research destinations by combining Artificial Intelligence, geolocation, weather forecasting, and travel planning into one seamless platform.
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
+
+- Secure User Registration
+- User Login
 - JWT Authentication
+- Password Hashing using bcryptjs
+- Persistent Login Sessions
 - Protected Routes
-- Secure Password Hashing
 
 ---
 
-📄 OCR Document Processing
+## 📄 AI Document Processing
 
 Upload:
 
@@ -50,7 +59,7 @@ Upload:
 - PDF Documents
 - Images
 
-Automatically extract:
+Automatically Extract:
 
 - Destination
 - Travel Dates
@@ -60,11 +69,11 @@ Automatically extract:
 
 ---
 
-🤖 AI Itinerary Generation
+## 🤖 AI Travel Itinerary Generation
 
 Powered by Google Gemini AI.
 
-Generates:
+Automatically Generates:
 
 - Day-wise itinerary
 - Tourist attractions
@@ -75,60 +84,61 @@ Generates:
 
 ---
 
-🖼 Smart Attraction Images
-
-Automatically fetches beautiful destination images using the Pexels API.
+## 🏛 AI Destination Guide
 
 Every attraction includes:
 
-- High-quality photo
-- Destination-specific search
+- Detailed Description
+- Historical Background
+- Interesting Highlights
+- Entry Fee
+- Opening Hours
+- Visitor Tips
+- Nearby Attractions
+
+---
+
+## 🖼 Smart Attraction Images
+
+Automatically fetches beautiful attraction images using the Pexels API.
+
+Every activity includes:
+
+- High-quality destination image
+- Attraction-specific search
 - Automatic fallback image
 
 ---
 
-🗺 Interactive Maps
+## 🗺 Interactive Maps
 
-Each attraction includes:
+Each attraction provides:
 
 - OpenStreetMap integration
-- Leaflet interactive maps
+- Interactive Leaflet Maps
 - Exact attraction location
-- Google Maps navigation button
+- Google Maps navigation
 
 ---
 
-📍 Detailed Place Information
+## 🌤 Live Weather Forecast
 
-Every attraction has its own dedicated page containing:
-
-- AI-generated description
-- Historical background
-- Interesting highlights
-- Entry fee
-- Opening hours
-- Visitor tips
-- Nearby attractions
-
----
-
-🌦 Real-Time Weather
-
-Weather information is generated using the attraction's precise coordinates.
+Weather is fetched using each attraction's precise coordinates.
 
 Displays:
 
-- Current temperature
-- Feels like temperature
+- Current Temperature
+- Feels Like Temperature
 - Humidity
-- Wind speed
-- 5-day weather forecast
+- Wind Speed
+- Weather Condition
+- 5-Day Forecast
 
 ---
 
-🌍 Accurate Geocoding
+## 📍 Intelligent Geocoding
 
-TravelAI improves location accuracy by combining:
+TravelAI improves map accuracy using:
 
 - Attraction Name
 - City
@@ -136,75 +146,95 @@ TravelAI improves location accuracy by combining:
 
 Example:
 
-Trevi Fountain → Rome → Italy
+```
+Trevi Fountain
+Rome
+Italy
+```
 
-instead of searching only "Trevi Fountain".
+instead of searching only:
 
-This significantly improves map accuracy.
+```
+Trevi Fountain
+```
 
----
-
-🔗 Google Maps Integration
-
-Each attraction includes a direct Google Maps link using:
-
-Attraction + City + Country
-
-ensuring accurate navigation.
+This significantly improves location accuracy.
 
 ---
 
-📤 Shareable Trips
+## 🔗 Google Maps Integration
 
-Generate unique share links for itineraries so they can easily be shared with others.
+Every attraction includes a direct Google Maps navigation link generated using:
+
+- Attraction
+- City
+- Country
 
 ---
 
-🏗 Tech Stack
+## 📚 Trip Management
 
-Frontend
+Users can:
+
+- Save Trips
+- View Previous Trips
+- Explore Detailed Attractions
+- Access Maps & Weather
+- Share Trips using Unique Share Links
+
+---
+
+# 🏗️ Tech Stack
+
+## Frontend
 
 - React (Vite)
-- React Router
-- React Query
 - Tailwind CSS
+- React Router DOM
+- React Query
 - Axios
 - React Leaflet
 - Lucide React
 
 ---
 
-Backend
+## Backend
 
 - Node.js
 - Express.js
 - REST APIs
-- JWT Authentication
 - Multer
+- Express Middleware
 
 ---
 
-Database
+## Database
 
 - MongoDB Atlas
-- Mongoose
+- Mongoose ODM
 
 ---
 
-AI
+## Authentication
 
-- Google Gemini API
+- JWT
+- bcryptjs
+
+---
+
+## Artificial Intelligence
+
+- Google Gemini AI
 
 Used for:
 
-- OCR data understanding
-- Travel itinerary generation
-- Attraction details
-- Travel recommendations
+- Booking Information Extraction
+- AI Travel Itinerary Generation
+- Destination Guide Generation
 
 ---
 
-APIs Used
+## APIs Used
 
 - Google Gemini API
 - OpenStreetMap Nominatim
@@ -214,120 +244,187 @@ APIs Used
 
 ---
 
-📂 Project Structure
+# 📂 Project Structure
 
+```text
 TravelAI/
-
 ├── frontend/
 │   ├── src/
 │   │   ├── api/
+│   │   ├── assets/
 │   │   ├── components/
 │   │   ├── context/
-│   │   ├── pages/
 │   │   ├── hooks/
-│   │   └── assets/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   └── App.jsx
+│   │
+│   └── package.json
 │
 ├── backend/
 │   ├── src/
 │   │   ├── config/
 │   │   ├── controllers/
-│   │   ├── middleware/
+│   │   ├── middlewares/
 │   │   ├── models/
 │   │   ├── routes/
 │   │   ├── services/
-│   │   └── utils/
-│   └── server.js
+│   │   ├── utils/
+│   │   └── server.js
+│   │
+│   └── package.json
+│
+└── README.md
+```
 
 ---
 
-🗄 Database Design
+# 🗄 Database Design
 
-Collections:
+## Users
 
-- Users
-- Trips
+Stores:
 
-Each Trip stores:
+- Name
+- Email
+- Password
+
+---
+
+## Trips
+
+Stores:
 
 - Destination
-- Travel Dates
+- Start Date
+- End Date
 - Extracted Booking Data
 - AI Generated Itinerary
-- Place Images
+- Activity Images
 - Coordinates
 - City
 - Country
-- Weather Information
 - Share Token
 
 ---
 
-🔄 Application Workflow
+# 🔄 Application Workflow
 
 1. User registers or logs in.
-2. Uploads booking documents.
-3. OCR extracts text.
-4. Gemini AI extracts structured travel information.
-5. Gemini generates a personalized itinerary.
-6. Images are fetched using the Pexels API.
-7. Geocoding retrieves precise coordinates for each attraction.
-8. Interactive maps are generated.
-9. Weather forecasts are retrieved using attraction coordinates.
-10. Users can explore each attraction in detail and navigate using Google Maps.
+2. Uploads travel booking documents.
+3. OCR extracts text from uploaded files.
+4. Google Gemini extracts structured booking information.
+5. AI generates a personalized day-wise itinerary.
+6. Destination images are fetched using the Pexels API.
+7. OpenStreetMap generates precise attraction coordinates.
+8. Interactive maps are displayed for every attraction.
+9. Live weather forecasts are fetched using attraction coordinates.
+10. Users explore attractions and navigate using Google Maps.
 
 ---
 
-🚀 Running Locally
+# 🚀 Running Locally
 
-Clone Repository
+## Clone Repository
 
-git clone <repository-url>
+```bash
+git clone https://github.com/Aishwarya-Ramesh-Shetty/TravelAI.git
 
 cd TravelAI
+```
 
 ---
 
-Backend
+## Backend
 
+```bash
 cd backend
 
 npm install
 
 npm run dev
+```
 
 ---
 
-Frontend
+## Frontend
 
+```bash
 cd frontend
 
 npm install
 
 npm run dev
+```
 
 ---
 
-🔮 Future Enhancements
+# 🔑 Environment Variables
 
-- AI Budget Planner
-- Currency Converter
-- Nearby Restaurants
-- Public Transport Suggestions
-- Hotel Recommendations
-- Offline Itinerary Access
-- Travel Expense Tracker
-- Multi-language Support
-- PDF Itinerary Export
-- AI Chat Travel Assistant
-- Live Flight Tracking
-- Emergency Contact Information
-- Local Events Recommendation
-- Packing Checklist Generator
+## Backend (.env)
+
+```env
+PORT=5000
+
+MONGO_URI=
+
+JWT_SECRET=
+
+GEMINI_API_KEY=
+
+PEXELS_API_KEY=
+
+CLIENT_URL=http://localhost:5173
+```
 
 ---
 
-👩‍💻 Author
+## Frontend (.env)
 
-Aishwarya Shetty
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+---
+
+# 📸 Screenshots
+
+- Home Page
+- Login
+- Dashboard
+- AI Generated Itinerary
+- Attraction Details
+- Weather Forecast
+- Interactive Maps
+- Google Maps Navigation
+
+*(Add screenshots after completion.)*
+
+---
+
+# 🔮 Future Enhancements
+
+- 🤖 AI Budget Planner
+- 🍽 Nearby Restaurant Recommendations
+- 🏨 Hotel Recommendations
+- 💱 Currency Converter
+- 📦 Packing Checklist Generator
+- 📅 Trip Calendar
+- 📄 PDF Itinerary Export
+- 🌐 Multi-language Support
+- 📱 Progressive Web App (PWA)
+- 💬 AI Travel Chat Assistant
+- ✈ Flight Status Tracking
+- 🎉 Local Events Recommendation
+
+---
+
+# 👩‍💻 Author
+
+**Aishwarya Shetty**
+
+BE Computer Science & Engineering (Data Science)
+
+Full Stack MERN Developer | AI-Powered Web Applications
 
 If you found this project useful, consider giving it a ⭐ on GitHub!
