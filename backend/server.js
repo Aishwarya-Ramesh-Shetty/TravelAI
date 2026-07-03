@@ -5,11 +5,11 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
-const authRoutes = require('./routes/authRoutes');
-const tripRoutes = require('./routes/tripRoutes');
-const shareRoutes = require('./routes/shareRoutes');
+const authRoutes = require('./src/routes/authRoutes');
+const tripRoutes = require('./src/routes/tripRoutes');
+const shareRoutes = require('./src/routes/shareRoutes');
 const weatherRoutes =
-require("./routes/weatherRoutes");
+require("./src/routes/weatherRoutes");
 
 const app = express();
 
@@ -42,6 +42,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
+console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB Atlas');

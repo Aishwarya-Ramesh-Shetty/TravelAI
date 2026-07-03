@@ -17,7 +17,7 @@ export default function PlaceDetails() {
   const navigate = useNavigate();
 
   const { place, destination } = location.state || {};
-
+  const details = place?.details || {};
 
   // const { data: details } = useQuery({
   //   queryKey: [
@@ -126,19 +126,19 @@ export default function PlaceDetails() {
           </h2>
 
           <p className="text-gray-700 leading-8 whitespace-pre-line">
-            {place.description || place.activity}
+            {details?.description || place.activity}
           </p>  
         </div>
 
         {/* History */}
-        {place.history && (
+        {details?.history && (
           <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-bold mb-4">
               🏛 History
             </h2>
 
             <p className="text-gray-700 leading-8 whitespace-pre-line">
-              {place.history.replace(/\*\*/g, "")}
+              {details?.history.replace(/\*\*/g, "")}
             </p>
           </div>
         )}
@@ -161,7 +161,7 @@ export default function PlaceDetails() {
                 </h3>
 
                 <p className="text-gray-600 mt-1 whitespace-pre-line">
-                  {(place.openingHours || "Check Official Website")
+                  {(details?.openingHours || "Check Official Website")
                     .replace(/\*\*/g, "")}
                 </p>
               </div>
@@ -176,7 +176,7 @@ export default function PlaceDetails() {
                 </h3>
 
                 <p className="text-gray-600 mt-1">
-                  {place.entryFee || "Varies"}
+                  {details?.entryFee || "Varies"}
                 </p>
               </div>
             </div>
@@ -216,7 +216,7 @@ export default function PlaceDetails() {
         </div>
 
         {/* Interesting Facts */}
-        {place.highlights?.length > 0 && (
+        {details?.highlights?.length > 0 && (
           <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
 
             <h2 className="text-2xl font-bold mb-4">
@@ -224,12 +224,12 @@ export default function PlaceDetails() {
             </h2>
 
             <div className="space-y-3">
-              {place.highlights.map((fact, idx) => (
+              {details?.highlights.map((fact, idx) => (
                 <div
                   key={idx}
                   className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl"
                 >
-                  {fact.replace(/\*\*/g, "")}
+                  {fact?.replace(/\*\*/g, "")}
                 </div>
               ))}
             </div>
@@ -238,7 +238,7 @@ export default function PlaceDetails() {
         )}
 
         {/* Visitor Tips */}
-        {place.travelTips?.length > 0 && (
+        {details?.travelTips?.length > 0 && (
           <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
 
             <h2 className="text-2xl font-bold mb-4">
@@ -246,12 +246,12 @@ export default function PlaceDetails() {
             </h2>
 
             <ul className="space-y-3">
-              {place.travelTips.map((tip, idx) => (
+              {details?.travelTips.map((tip, idx) => (
                 <li
                   key={idx}
                   className="bg-green-50 p-4 rounded-xl"
                 >
-                  {tip.replace(/\*\*/g, "")}
+                  {tip?.replace(/\*\*/g, "")}
                 </li>
               ))}
             </ul>
@@ -260,24 +260,24 @@ export default function PlaceDetails() {
         )}
 
         {/* Nearby Attractions */}
-        {place.nearbyAttractions?.length > 0 && (
+        {details?.nearbyAttractions?.length > 0 && (
           <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-bold mb-6">
               📍 Nearby Attractions
             </h2>
 
             <div className="grid md:grid-cols-2 gap-5">
-              {place.nearbyAttractions.map((item, idx) => (
+              {details?.nearbyAttractions.map((item, idx) => (
                 <div
                   key={idx}
                   className="border rounded-2xl p-5 hover:shadow-lg transition"
                 >
                   <h3 className="font-bold text-lg mb-2">
-                    {item.name.replace(/\*\*/g, "")}
+                    {item.name?.replace(/\*\*/g, "")}
                   </h3>
 
                   <p className="text-gray-600">
-                    {item.description.replace(/\*\*/g, "")}
+                    {item.description?.replace(/\*\*/g, "")}
                   </p>
                 </div>
               ))}

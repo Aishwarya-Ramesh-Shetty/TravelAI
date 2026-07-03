@@ -45,7 +45,7 @@ exports.createTrip = async (req, res) => {
     } = req.body;
 
 
-    let itinerary =
+    const itinerary =
       await aiService.generateItinerary({
         destination,
         startDate,
@@ -55,12 +55,12 @@ exports.createTrip = async (req, res) => {
 
     console.log("Enhancing itinerary with AI...");
 
-    itinerary =
+    const enrichedItinerary =
       await aiService.enrichItinerary(itinerary);
 
     // Attach images to activities
-    if (itinerary.days && itinerary.days.length > 0) {
-      for (const day of itinerary.days) {
+    if (enrichedItinerary.days && enrichedItinerary.days.length > 0) {
+      for (const day of enrichedItinerary.days) {
         if (day.activities && day.activities.length > 0) {
           for (const activity of day.activities) {
             const coords = await getCoordinates(
@@ -74,7 +74,7 @@ exports.createTrip = async (req, res) => {
 
             if (activity.placeName) {
               activity.imageUrl = await getPlaceImage(
-                activity.placeName,
+                `${activity.placeName}, ${activity.city}, ${activity.country}`,
                 destination
               );
             } else {
@@ -91,7 +91,7 @@ exports.createTrip = async (req, res) => {
       startDate,
       endDate,
       extractedData,
-      itinerary,
+      itinerary: enrichedItinerary,
       shareToken: uuidv4()
     });
 

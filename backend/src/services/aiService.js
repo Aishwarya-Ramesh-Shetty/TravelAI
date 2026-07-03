@@ -9,6 +9,7 @@ const cleanJSON = (text) => {
 const generateWithRetry = async (prompt) => {
   const models = [
     "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
   ];
 
   let lastError;
@@ -238,21 +239,37 @@ ${JSON.stringify(itinerary)}
 
 Your task:
 
-For EVERY activity, enrich it with:
+For every activity, ADD a new object called "details".
 
-- description (120-180 words)
-- history (80-120 words)
-- highlights (3-5)
-- entryFee
-- openingHours
-- travelTips (3-5)
-- nearbyAttractions (3-5)
+Do NOT modify any existing field.
+
+The details object must contain:
+
+details: {
+  description: "...",
+  history: "...",
+  entryFee: "...",
+  openingHours: "...",
+  highlights: [
+    "...",
+    "..."
+  ],
+  travelTips: [
+    "...",
+    "..."
+  ],
+  nearbyAttractions: [
+    {
+      "name": "...",
+      "description": "..."
+    }
+  ]
+}
 
 Rules:
 
-- Keep every existing field unchanged.
-- Do NOT remove any activities.
-- Do NOT change timings.
+- Keep placeName, city, country, activity, time, estimatedCost and bestTimeToVisit exactly as they are.
+- Do not remove any activities.
 - Return ONLY valid JSON.
 - No markdown.
 - No explanations.
