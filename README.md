@@ -81,6 +81,7 @@ Automatically Generates:
 - Estimated costs
 - Best visiting time
 - Travel tips
+- Location 
 
 ---
 
