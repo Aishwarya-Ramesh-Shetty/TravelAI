@@ -17,6 +17,9 @@ const generateWithRetry = async (prompt) => {
   for (const modelName of models) {
     const model = genAI.getGenerativeModel({
       model: modelName,
+      generationConfig: {
+        responseMimeType: "application/json"
+      }
     });
 
     for (let attempt = 1; attempt <= 3; attempt++) {
@@ -86,9 +89,13 @@ Schema:
   const responseText =
     await generateWithRetry(prompt);
 
-  return JSON.parse(
-    cleanJSON(responseText)
-  );
+  try {
+    return JSON.parse(cleanJSON(responseText));
+  } catch (err) {
+    console.log("FAILED IN extractDataFromText");
+    console.log(cleanJSON(responseText).slice(-1000));
+    throw err;
+  }
 };
 
 exports.generateItinerary = async (data) => {
@@ -169,9 +176,13 @@ Required Schema:
   const responseText =
     await generateWithRetry(prompt);
 
-  return JSON.parse(
-    cleanJSON(responseText)
-  );
+  try {
+    return JSON.parse(cleanJSON(responseText));
+  } catch (err) {
+    console.log("FAILED IN generateItinerary");
+    console.log(cleanJSON(responseText).slice(-1000));
+    throw err;
+  }
 };
 
 // exports.generatePlaceDetails = async (
@@ -230,57 +241,111 @@ Required Schema:
 
 exports.enrichItinerary = async (itinerary) => {
 
+  // Extract only the places from the itinerary
+  const places = [];
+
+  itinerary.days.forEach(day => {
+    day.activities.forEach(activity => {
+      places.push({
+        placeName: activity.placeName,
+        city: activity.city,
+        country: activity.country
+      });
+    });
+  });
+
   const prompt = `
 You are a travel expert.
 
-Below is a generated travel itinerary.
+Generate travel details for the following tourist attractions.
 
-${JSON.stringify(itinerary)}
+${JSON.stringify(places)}
 
-Your task:
+Return ONLY valid JSON.
 
-For every activity, ADD a new object called "details".
+Schema:
 
-Do NOT modify any existing field.
-
-The details object must contain:
-
-details: {
-  description: "...",
-  history: "...",
-  entryFee: "...",
-  openingHours: "...",
-  highlights: [
-    "...",
-    "..."
-  ],
-  travelTips: [
-    "...",
-    "..."
-  ],
-  nearbyAttractions: [
-    {
-      "name": "...",
-      "description": "..."
+[
+  {
+    "placeName": "",
+    "details": {
+      "description": "",
+      "history": "",
+      "entryFee": "",
+      "openingHours": "",
+      "highlights": [
+        "",
+        "",
+        ""
+      ],
+      "travelTips": [
+        "",
+        "",
+        ""
+      ],
+      "nearbyAttractions": [
+        {
+          "name": "",
+          "description": ""
+        },
+        {
+          "name": "",
+          "description": ""
+        }
+      ]
     }
-  ]
-}
+  }
+]
 
 Rules:
 
-- Keep placeName, city, country, activity, time, estimatedCost and bestTimeToVisit exactly as they are.
-- Do not remove any activities.
 - Return ONLY valid JSON.
 - No markdown.
 - No explanations.
-
-Return the COMPLETE itinerary with these new fields added to every activity.
+- Do NOT include any fields other than those in the schema.
+- Description should be between 50 and 70 words.
+- History should be between 30 and 50 words.
+- Exactly 3 highlights.
+- Exactly 3 travel tips.
+- Exactly 6 nearby attractions.
+- Entry fee should be realistic or "Free" or "Varies".
+- Opening hours should be concise.
 `;
 
-  const responseText =
-    await generateWithRetry(prompt);
+  const responseText = await generateWithRetry(prompt);
 
-  return JSON.parse(
-    cleanJSON(responseText)
-  );
+  try {
+
+    const detailsArray = JSON.parse(cleanJSON(responseText));
+
+    const detailsMap = new Map();
+
+    detailsArray.forEach(item => {
+      detailsMap.set(item.placeName, item.details);
+    });
+
+    itinerary.days.forEach(day => {
+      day.activities.forEach(activity => {
+        const details = detailsMap.get(activity.placeName);
+
+        if (details) {
+          activity.details = details;
+        }
+      });
+    });
+
+    return itinerary;
+
+  } catch (err) {
+
+    console.log("FAILED IN enrichItinerary");
+
+    const cleaned = cleanJSON(responseText);
+
+    console.log("Length:", cleaned.length);
+
+    console.log(cleaned.slice(-1000));
+
+    throw err;
+  }
 };

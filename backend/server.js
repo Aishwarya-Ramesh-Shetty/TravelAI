@@ -1,3 +1,5 @@
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,7 +11,7 @@ const authRoutes = require('./src/routes/authRoutes');
 const tripRoutes = require('./src/routes/tripRoutes');
 const shareRoutes = require('./src/routes/shareRoutes');
 const weatherRoutes =
-require("./src/routes/weatherRoutes");
+  require("./src/routes/weatherRoutes");
 
 const app = express();
 
@@ -48,4 +50,9 @@ mongoose.connect(process.env.MONGODB_URI)
     console.log('Connected to MongoDB Atlas');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
-  .catch(err => console.error('Database connection error:', err));
+  .catch(err => {
+    console.error("Name:", err.name);
+    console.error("Message:", err.message);
+    console.error("Code:", err.code);
+    console.error(err);
+  });

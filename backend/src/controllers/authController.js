@@ -11,6 +11,8 @@ exports.register = async (req, res) => {
     const user = await User.create({ name, email, password });
     const token = signToken(user._id);
     res.status(201).json({ token, user: { id: user._id, name, email } });
+    console.log("Sign in request received");
+    console.log(req.body);
   } catch (err) {
     res.status(400).json({ message: 'Registration failed. Email might exist.' });
   }
@@ -25,6 +27,8 @@ exports.login = async (req, res) => {
     }
     const token = signToken(user._id);
     res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    console.log("Login request received");
+    console.log(req.body);
   } catch (err) {
     res.status(400).json({ message: 'Login failed' });
   }
