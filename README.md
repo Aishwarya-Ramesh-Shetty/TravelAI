@@ -311,7 +311,7 @@ Stores:
 
 # 🔄 Application Workflow
 
-1. User registers or logs in.
+1. User registers or logs in where he sees his previous booking history and more options.
 2. Uploads travel booking documents.
 3. OCR extracts text from uploaded files.
 4. Google Gemini extracts structured booking information.
