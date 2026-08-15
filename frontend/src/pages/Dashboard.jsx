@@ -8,11 +8,85 @@ import {
   Plane,
   Globe,
   Clock3,
-  Sparkles
+  Sparkles,
+  Check,
+  ClipboardCheck,
+  RotateCcw
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
+
+  const checklistItems = [
+    {
+      id: "passport",
+      label: "Passport / ID",
+    },
+    {
+      id: "tickets",
+      label: "Flight tickets",
+    },
+    {
+      id: "hotel",
+      label: "Hotel confirmation",
+    },
+    {
+      id: "insurance",
+      label: "Travel insurance",
+    },
+    {
+      id: "money",
+      label: "Currency / payment",
+    },
+    {
+      id: "charger",
+      label: "Chargers & power bank",
+    },
+    {
+      id: "medicines",
+      label: "Medicines",
+    },
+    {
+      id: "packing",
+      label: "Pack clothes",
+    },
+    {
+      id: "documents",
+      label: "Important documents",
+    },
+    {
+      id: "weather",
+      label: "Check weather",
+    },
+  ];
+
+  const [completedItems, setCompletedItems] = useState(() => {
+    const saved = localStorage.getItem("travelai-checklist");
+    return saved ? JSON.parse(saved) : [];
+  })
+
+  useEffect(() => {
+    localStorage.setItem(
+      "travelai-checklist",
+      JSON.stringify(completedItems)
+    );
+  }, [completedItems]);
+
+  const toggleChecklistItem = (id) => {
+    setCompletedItems((prev) =>
+      prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id]
+    );
+  };
+
+  const completedCount = completedItems.length;
+
+  const checklistProgress = Math.round(
+    (completedCount / checklistItems.length) * 100
+  );
+
   const { data: trips, isLoading } = useQuery({
     queryKey: ['trips'],
     queryFn: async () => {
@@ -48,6 +122,9 @@ export default function Dashboard() {
         1
       );
     }, 0) || 0;
+
+
+
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -157,6 +234,180 @@ export default function Dashboard() {
             <p className="text-gray-500">
               Travel Days
             </p>
+
+          </div>
+
+        </div>
+
+
+        <div className="grid lg:grid-cols-3 gap-6 mb-10">
+
+          {/* Checklist */}
+          <div className="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-7">
+
+            <div className="flex items-start justify-between mb-6">
+
+              <div className="flex items-center gap-4">
+
+                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                  <ClipboardCheck size={24} />
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-bold text-slate-900">
+                    Before You Go
+                  </h2>
+
+                  <p className="text-sm text-slate-500 mt-1">
+                    Complete your essential travel preparations
+                  </p>
+                </div>
+
+              </div>
+
+              {completedCount > 0 && (
+                <button
+                  onClick={() => setCompletedItems([])}
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-red-500 transition"
+                >
+                  <RotateCcw size={15} />
+                  Reset
+                </button>
+              )}
+
+            </div>
+
+
+            {/* Progress */}
+
+            <div className="mb-6">
+
+              <div className="flex justify-between items-center mb-2">
+
+                <span className="text-sm font-medium text-slate-600">
+                  {completedCount} of {checklistItems.length} completed
+                </span>
+
+                <span className="text-sm font-bold text-indigo-600">
+                  {checklistProgress}%
+                </span>
+
+              </div>
+
+              <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+
+                <div
+                  className="h-full bg-indigo-600 rounded-full transition-all duration-500"
+                  style={{
+                    width: `${checklistProgress}%`,
+                  }}
+                />
+
+              </div>
+
+            </div>
+
+
+            {/* Checklist */}
+
+            <div className="grid sm:grid-cols-2 gap-3">
+
+              {checklistItems.map((item) => {
+
+                const completed = completedItems.includes(item.id);
+
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => toggleChecklistItem(item.id)}
+                    className={`
+              flex items-center gap-3
+              text-left
+              p-4
+              rounded-2xl
+              border
+              transition-all
+              duration-200
+              ${completed
+                        ? "bg-green-50 border-green-200"
+                        : "bg-slate-50 border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/40"
+                      }
+            `}
+                  >
+
+                    <div
+                      className={`
+                w-6 h-6
+                rounded-full
+                flex items-center justify-center
+                flex-shrink-0
+                border-2
+                transition
+                ${completed
+                          ? "bg-green-500 border-green-500 text-white"
+                          : "border-slate-300 bg-white"
+                        }
+              `}
+                    >
+
+                      {completed && <Check size={15} />}
+
+                    </div>
+
+                    <span
+                      className={`
+                text-sm font-medium
+                ${completed
+                          ? "text-green-700 line-through"
+                          : "text-slate-700"
+                        }
+              `}
+                    >
+                      {item.label}
+                    </span>
+
+                  </button>
+                );
+
+              })}
+
+            </div>
+
+          </div>
+
+
+          {/* Checklist Summary */}
+
+          <div className="bg-gradient-to-br from-indigo-600 to-blue-600 text-white rounded-3xl p-7 flex flex-col justify-between">
+
+            <div>
+
+              <div className="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center mb-5">
+                <Plane size={24} />
+              </div>
+
+              <h2 className="text-2xl font-bold">
+                Almost ready!
+              </h2>
+
+              <p className="text-indigo-100 mt-2 leading-relaxed">
+                Complete your checklist before your journey
+                so you can travel without last-minute stress.
+              </p>
+
+            </div>
+
+            <div className="mt-8">
+
+              <div className="text-5xl font-bold">
+                {checklistProgress}%
+              </div>
+
+              <p className="text-indigo-100 mt-1">
+                Travel preparation complete
+              </p>
+
+            </div>
 
           </div>
 
