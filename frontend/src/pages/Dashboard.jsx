@@ -11,7 +11,9 @@ import {
   Sparkles,
   Check,
   ClipboardCheck,
-  RotateCcw
+  RotateCcw,
+  Hotel,
+  ListChecks
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
@@ -122,6 +124,56 @@ export default function Dashboard() {
         1
       );
     }, 0) || 0;
+
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcomingTrip = trips
+    ?.filter((trip) => trip.startDate)
+    .sort(
+      (a, b) =>
+        new Date(a.startDate) - new Date(b.startDate)
+    )[0];
+
+  const daysUntilTrip = upcomingTrip
+    ? Math.max(
+      0,
+      Math.ceil(
+        (new Date(upcomingTrip.startDate) - new Date()) /
+        (1000 * 60 * 60 * 24)
+      )
+    )
+    : 0;
+
+  const upcomingTripDays = upcomingTrip
+    ? Math.ceil(
+      (
+        new Date(upcomingTrip.endDate) -
+        new Date(upcomingTrip.startDate)
+      ) /
+      (1000 * 60 * 60 * 24)
+    ) + 1
+    : 0;
+
+  const upcomingPlaces =
+    upcomingTrip?.itinerary?.days?.reduce(
+      (total, day) =>
+        total + (day.activities?.length || 0),
+      0
+    ) || 0;
+
+  const upcomingFlights =
+    upcomingTrip?.extractedData?.flights?.length || 0;
+
+  const upcomingHotels =
+    upcomingTrip?.extractedData?.hotels?.length || 0;
+
+  const tripStarted =
+    upcomingTrip &&
+    new Date(upcomingTrip.startDate) <= new Date();
+
+
 
 
 
@@ -238,6 +290,179 @@ export default function Dashboard() {
           </div>
 
         </div>
+
+
+        {upcomingTrip && (
+          <div className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl shadow-sm mb-10">
+
+            {/* Decorative background */}
+            <div className="absolute -right-16 -top-16 w-64 h-64 bg-indigo-50 rounded-full" />
+            <div className="absolute -right-8 bottom-0 w-40 h-40 bg-blue-50 rounded-full" />
+
+            <div className="relative z-10 p-8">
+
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+
+                <div>
+
+                  <div className="flex items-center gap-2 text-indigo-600 font-semibold text-sm mb-2">
+                    <Sparkles size={17} />
+                    YOUR NEXT ADVENTURE
+                  </div>
+
+                  <h2 className="text-3xl font-bold text-slate-900">
+                    {upcomingTrip.destination}
+                  </h2>
+
+                  <div className="flex items-center gap-2 text-slate-500 mt-2">
+                    <Calendar size={17} />
+
+                    <span>
+                      {new Date(
+                        upcomingTrip.startDate
+                      ).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+
+                      {" – "}
+
+                      {new Date(
+                        upcomingTrip.endDate
+                      ).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+
+                </div>
+
+                <Link
+                  to={`/itinerary/${upcomingTrip._id}`}
+                  className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition"
+                >
+                  View Itinerary
+                  <ArrowRight size={18} />
+                </Link>
+
+              </div>
+
+
+              {/* Countdown */}
+              <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-5 text-white mb-7">
+
+                <div className="flex items-center gap-3">
+
+                  <div className="p-3 bg-white/15 rounded-xl">
+                    <Plane size={22} />
+                  </div>
+
+                  <div>
+
+                    <p className="text-indigo-100 text-sm">
+                      {daysUntilTrip === 0
+                        ? "Your trip starts"
+                        : "Your trip begins in"}
+                    </p>
+
+                    <p className="text-2xl font-bold">
+                      {daysUntilTrip === 0
+                        ? "Today ✈️"
+                        : `${daysUntilTrip} ${daysUntilTrip === 1 ? "day" : "days"
+                        }`}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              {/* Trip statistics */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                <div className="bg-slate-50 rounded-2xl p-5">
+
+                  <Calendar
+                    size={21}
+                    className="text-indigo-600 mb-3"
+                  />
+
+                  <p className="text-2xl font-bold text-slate-900">
+                    {upcomingTripDays}
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    Travel Days
+                  </p>
+
+                </div>
+
+
+                <div className="bg-slate-50 rounded-2xl p-5">
+
+                  <MapPin
+                    size={21}
+                    className="text-green-600 mb-3"
+                  />
+
+                  <p className="text-2xl font-bold text-slate-900">
+                    {upcomingPlaces}
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    Places
+                  </p>
+
+                </div>
+
+
+                <div className="bg-slate-50 rounded-2xl p-5">
+
+                  <Plane
+                    size={21}
+                    className="text-orange-500 mb-3"
+                  />
+
+                  <p className="text-2xl font-bold text-slate-900">
+                    {upcomingFlights}
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    Flights
+                  </p>
+
+                </div>
+
+
+                <div className="bg-slate-50 rounded-2xl p-5">
+
+                  <Hotel
+                    size={21}
+                    className="text-pink-500 mb-3"
+                  />
+
+                  <p className="text-2xl font-bold text-slate-900">
+                    {upcomingHotels}
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    Hotels
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        )}
 
 
         <div className="grid lg:grid-cols-3 gap-6 mb-10">
