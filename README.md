@@ -173,6 +173,61 @@ Every attraction includes a direct Google Maps navigation link generated using:
 
 ---
 
+
+# 📊 Smart Travel Dashboard
+
+TravelAI includes a personalized dashboard where users can manage their trips.
+
+The dashboard provides:
+
+- Total Trips Planned
+- Countries
+- Upcoming Trips
+- Total Travel Days
+- Next Adventure Overview
+- Trip Statistics
+- Saved Trips
+
+The **Next Adventure** section highlights the user's nearest trip and provides:
+
+- Destination
+- Travel Dates
+- Countdown
+- Number of Travel Days
+- Number of Planned Places
+- Flight Count
+- Hotel Count
+- Direct Itinerary Access
+
+---
+
+# ✅ Travel Preparation Checklist
+
+TravelAI includes an interactive **Before You Go** checklist to help users prepare for their trip.
+
+Checklist items include:
+
+- Passport / ID
+- Flight Tickets
+- Hotel Confirmation
+- Travel Insurance
+- Currency / Payment
+- Chargers & Power Bank
+- Medicines
+- Packing
+- Important Documents
+- Weather Check
+
+The checklist includes:
+
+- Completion tracking
+- Progress percentage
+- Interactive checkboxes
+- Reset functionality
+- Local browser persistence
+
+Checklist interactions are handled on the frontend and do not require additional Gemini API calls.
+
 ## 📚 Trip Management
 
 Users can:
