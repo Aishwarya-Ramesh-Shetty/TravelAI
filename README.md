@@ -228,6 +228,75 @@ The checklist includes:
 
 Checklist interactions are handled on the frontend and do not require additional Gemini API calls.
 
+
+# 🌍 Explore Destinations
+
+TravelAI includes an Explore page where users can discover destinations even before creating a trip.
+
+Users can:
+
+- Search destinations
+- Browse popular destinations
+- Filter destinations by travel interest
+- Explore cities
+- Discover historical destinations
+- Find beach destinations
+- Explore mountain destinations
+- Discover nature-focused destinations
+
+### 🔎 Destination Search
+
+Users can search destinations by:
+
+- Destination Name
+- Country
+
+### 🧭 Explore by Interest
+
+Destinations can be filtered by categories such as:
+
+- 🏛 History
+- 🏖 Beaches
+- 🏔 Mountains
+- 🌆 Cities
+- 🌿 Nature
+
+### 🌎 Popular Destinations
+
+The Explore page provides destination cards containing:
+
+- Destination Image
+- Destination Name
+- Country
+- Travel Category
+- Short Destination Description
+- Link to Explore the Destination
+
+### ✨ Explore → Plan Workflow
+
+The Explore page also connects destination discovery with trip planning.
+
+```text
+Explore Destination
+        │
+        ▼
+Destination Details
+        │
+        ▼
+Explore Attractions
+        │
+        ▼
+Save / Discover Places
+        │
+        ▼
+Plan a Trip
+        │
+        ▼
+Upload Booking
+        │
+        ▼
+AI Generated Itinerary
+
 ## 📚 Trip Management
 
 Users can:
