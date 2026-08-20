@@ -39,6 +39,10 @@ export default function Navbar() {
                   Dashboard
                 </Link>
 
+                <Link to="/explore">
+                  Explore
+                </Link>
+
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center">
                     <UserIcon
