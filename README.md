@@ -231,7 +231,7 @@ Checklist interactions are handled on the frontend and do not require additional
 
 # 🌍 Explore Destinations
 
-TravelAI includes an Explore page where users can discover destinations even before creating a trip.
+TravelAI includes an Explore page where users can discover destinations even before creating a trip which uses AI.
 
 Users can:
 
