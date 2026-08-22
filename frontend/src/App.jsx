@@ -10,6 +10,7 @@ import Review from './pages/Review';
 import ItineraryView from './pages/ItineraryView';
 import PlaceDetails from "./pages/PlaceDetails";
 import Explore from "./pages/Explore";
+import DestinationDetails from "./pages/DestinationDetails";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -36,6 +37,10 @@ function App() {
             />
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/explore" element={<Explore />} />
+            <Route
+              path="/explore/:destination"
+              element={<DestinationDetails />}
+            />
           </Routes>
           <Toaster position="bottom-right" />
         </div>

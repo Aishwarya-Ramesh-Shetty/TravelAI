@@ -13,6 +13,8 @@ const shareRoutes = require('./src/routes/shareRoutes');
 const weatherRoutes =
   require("./src/routes/weatherRoutes");
 
+const exploreRoutes = require("./src/routes/exploreRoutes");
+
 const app = express();
 
 // Middleware
@@ -33,6 +35,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/trips', tripRoutes);
 app.use('/api/share', shareRoutes);
 app.use("/api/weather", weatherRoutes);
+app.use("/api/explore", exploreRoutes);
 
 // Health Check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
