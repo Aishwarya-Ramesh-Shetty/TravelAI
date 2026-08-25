@@ -518,13 +518,31 @@ VITE_API_URL=http://localhost:5000/api
 - Home Page
 - Login
 - Dashboard
-- AI Generated Itinerary
-- Attraction Details
-- Weather Forecast
-- Interactive Maps
-- Google Maps Navigation
+- <img width="1917" height="986" alt="image" src="https://github.com/user-attachments/assets/1a26ce9c-2074-428a-b56f-876871caa0f6" />
+<img width="1917" height="990" alt="image" src="https://github.com/user-attachments/assets/e5a0b00f-00f0-421d-971b-e9f7a693d02e" />
+<img width="1911" height="988" alt="image" src="https://github.com/user-attachments/assets/66da13e9-59b8-474e-aa30-aca74269c758" />
 
-*(Add screenshots after completion.)*
+- AI Generated Itinerary
+- <img width="1917" height="1198" alt="image" src="https://github.com/user-attachments/assets/06e9f183-ccbc-4c75-8d26-222b4a12958a" />
+
+- Attraction Details
+- <img width="1917" height="1195" alt="image" src="https://github.com/user-attachments/assets/cf890eb6-fd7a-4873-a114-0fde13b717c6" />
+<img width="1917" height="988" alt="image" src="https://github.com/user-attachments/assets/0db1b053-ce8e-4fdf-bd65-9d3bdda6a391" />
+<img width="1912" height="761" alt="image" src="https://github.com/user-attachments/assets/6545d7c2-ed83-4866-a862-e46ea6cca86b" />
+<img width="1917" height="991" alt="image" src="https://github.com/user-attachments/assets/8164c79a-4493-4f62-9da9-d38b577b850c" />
+
+
+- Weather Forecast
+- <img width="1917" height="985" alt="image" src="https://github.com/user-attachments/assets/96b67ee7-bfa5-482d-ad04-8eb464afc619" />
+
+- Interactive Maps
+- <img width="1917" height="996" alt="image" src="https://github.com/user-attachments/assets/964bf534-163a-44b9-a65b-3ac959d1d888" />
+
+- Google Maps Navigation
+- <img width="1916" height="988" alt="image" src="https://github.com/user-attachments/assets/feafc3ce-db59-4e06-96ed-c803c5ab9356" />
+
+
+
 
 ---
 
