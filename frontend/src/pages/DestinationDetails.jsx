@@ -128,8 +128,12 @@ export default function DestinationDetails() {
           <div className="max-w-7xl mx-auto px-4">
 
             <button
-              onClick={() => navigate(-1)}
-              className="bg-white/95 backdrop-blur text-slate-800 px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-lg hover:bg-white transition"
+              type="button"
+              onClick={() => {
+                
+                navigate("/explore");
+              }}
+              className="relative z-50 bg-white/95 backdrop-blur text-slate-800 px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-lg hover:bg-white transition"
             >
               <ArrowLeft size={18} />
               Back
